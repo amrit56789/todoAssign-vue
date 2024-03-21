@@ -8,7 +8,7 @@
         <label for="text-area">DETAILS</label>
         <textarea type="textarea" id="text-area" rows="8" v-model="task.details"></textarea>
     </div>
-    <button class="btn" @click="submitTask">Add project</button>
+    <button class="btn" @click="submitTask">{{ buttonText }}</button>
 </div>
 </template>
 
@@ -69,6 +69,11 @@ export default {
                 title: "",
                 details: ""
             };
+        },
+        computed: {
+            buttonText() {
+                return this.task.index !== undefined ? 'Update project' : 'Add project';
+            }
         },
     },
 }

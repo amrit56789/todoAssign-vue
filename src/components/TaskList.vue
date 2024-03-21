@@ -1,7 +1,7 @@
 <template>
 <div class="view-container">
     <template v-if="tasks.length > 0">
-        <div v-for="(task, index) in filteredTasks" :key="index" class="task" :class="{ 'active': activeCardIndex === index, 'task-incomplete': !task.isCompleted }" @click="toggleCard(index)">
+        <div v-for="(task, index) in filteredTasks" :key="index" class="task" :class="{ 'active': showDescription === index, 'task-incomplete': !task.isCompleted }" @click="toggleCard(index)">
             <div class="icons">
                 <h3>{{ task.title }}</h3>
                 <div class="icons-list">
@@ -10,7 +10,7 @@
                     <i class="material-icons check-icon" @click.stop="toggleCompletion(index)" :class="{ active: task.isCompleted }">check</i>
                 </div>
             </div>
-            <div v-if="activeCardIndex === index">{{ task.details }}</div>
+            <div v-if="showDescription === index">{{ task.details }}</div>
         </div>
     </template>
     <p v-else class="paragraph">No projects</p>
@@ -27,7 +27,7 @@ export default {
     },
     data() {
         return {
-            activeCardIndex: null,
+            showDescription: null,
         }
     },
     computed: {
@@ -41,7 +41,7 @@ export default {
     },
     methods: {
         toggleCard(index) {
-            this.activeCardIndex = this.activeCardIndex === index ? null : index;
+            this.showDescription = this.showDescription === index ? null : index;
         },
         deleteTask(index) {
             this.$emit('delete-task', index);

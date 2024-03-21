@@ -3,47 +3,47 @@
     <div class="container">
         <div class="content-wrapper">
             <div class="tabs">
-                <button @click="setActiveTab('project')" :class="{ active: activeTab === 'project' }">Project</button>
-                <button @click="setActiveTab('newProject')" :class="{ active: activeTab === 'newProject' }">New Project</button>
+                <button @click="setActiveTab('project')" :class="{ active: activeTab === 'project' }">Projects</button>
+                <button @click="setActiveTab('newProject')" :class="{ active: activeTab === 'newProject' }">Add a New Project</button>
             </div>
 
             <div class="tab-content" v-if="activeTab === 'project'">
                 <div class="sub-tabs">
-                    <button @click="setActiveProjectView('viewAll')" :class="{ active: activeProjectView === 'viewAll' }">VIEW ALL</button>
-                    <button @click="setActiveProjectView('completed')" :class="{ active: activeProjectView === 'completed' }">COMPLETED</button>
-                    <button @click="setActiveProjectView('ongoing')" :class="{ active: activeProjectView === 'ongoing' }">ONGOING</button>
+                    <button @click="setactiveProjectTab('viewAll')" :class="{ active: activeProjectTab === 'viewAll' }">VIEW ALL</button>
+                    <button @click="setactiveProjectTab('completed')" :class="{ active: activeProjectTab === 'completed' }">COMPLETED</button>
+                    <button @click="setactiveProjectTab('ongoing')" :class="{ active: activeProjectTab === 'ongoing' }">ONGOING</button>
                 </div>
                 <div class="project-list">
                     <div class="project-list">
-                        <TaskList v-if="activeProjectView === 'viewAll'" :tasks="tasks" :showCompleted=null @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
-                        <TaskList v-if="activeProjectView === 'completed'" :tasks="tasks" :showCompleted="true" @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
-                        <TaskList v-if="activeProjectView === 'ongoing'" :tasks="tasks" :showCompleted="false" @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
+                        <TaskList v-if="activeProjectTab === 'viewAll'" :tasks="tasks" :showCompleted=null @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
+                        <TaskList v-if="activeProjectTab === 'completed'" :tasks="tasks" :showCompleted="true" @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
+                        <TaskList v-if="activeProjectTab === 'ongoing'" :tasks="tasks" :showCompleted="false" @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
 
                     </div>
                 </div>
             </div>
         </div>
         <div class="new-project">
-            <NewProject v-if="activeTab === 'newProject'" :taskToEdit="taskToEdit" @add-task="addTask" @update-task="updateTask" />
+            <addEdit v-if="activeTab === 'newProject'" :taskToEdit="taskToEdit" @add-task="addTask" @update-task="updateTask" />
         </div>
     </div>
 </div>
 </template>
 
 <script>
-import NewProject from './components/NewProject.vue'
+import addEdit from './components/addEdit.vue'
 import TaskList from './components/TaskList.vue'
 
 export default {
     name: 'App',
     components: {
-        NewProject,
+        addEdit,
         TaskList
     },
     data() {
         return {
             activeTab: 'project',
-            activeProjectView: 'viewAll',
+            activeProjectTab: 'viewAll',
             tasks: [],
             taskToEdit: null,
         }
@@ -52,11 +52,11 @@ export default {
         setActiveTab(tab) {
             this.activeTab = tab;
             if (tab === 'project') {
-                this.activeProjectView = 'viewAll';
+                this.activeProjectTab = 'viewAll';
             }
         },
-        setActiveProjectView(view) {
-            this.activeProjectView = view;
+        setactiveProjectTab(view) {
+            this.activeProjectTab = view;
         },
         addTask(newTask) {
             this.tasks.push(newTask);
