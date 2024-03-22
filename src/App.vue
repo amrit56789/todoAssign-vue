@@ -15,10 +15,7 @@
                 </div>
                 <div class="project-list">
                     <div class="project-list">
-                        <TaskList v-if="activeProjectTab === 'viewAll'" :tasks="tasks" :showCompleted=null @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
-                        <TaskList v-if="activeProjectTab === 'completed'" :tasks="tasks" :showCompleted="true" @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
-                        <TaskList v-if="activeProjectTab === 'ongoing'" :tasks="tasks" :showCompleted="false" @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
-
+                        <TaskList :tasks="tasks" :showCompleted="computedShowCompleted" @delete-task="deleteTask" @edit-task="editTask" @toggle-completion="toggleTaskCompletion" />
                     </div>
                 </div>
             </div>
@@ -46,6 +43,18 @@ export default {
             activeProjectTab: 'viewAll',
             tasks: [],
             taskToEdit: null,
+        }
+    },
+    computed: {
+        computedShowCompleted() {
+            if (this.activeProjectTab === 'viewAll') {
+                return null;
+            } else if (this.activeProjectTab === 'completed') {
+                return true;
+            } else if (this.activeProjectTab === 'ongoing') {
+                return false;
+            }
+            return null;
         }
     },
     methods: {
