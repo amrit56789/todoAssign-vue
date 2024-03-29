@@ -4,9 +4,8 @@
         <div class="content-wrapper">
             <div class="tabs">
                 <button @click="setActiveTab('project')" :class="{ active: activeTab === 'project' }">Projects</button>
-                <button @click="setActiveTab('newProject')" :class="{ active: activeTab === 'newProject' }">Add a New Project</button>
+                <button @click="setActiveTab('newProject')" :class="{ active: activeTab === 'newProject' }">{{ this.taskToEdit!==null ? 'Update Project' : 'Add a New Project' }}</button>
             </div>
-
             <div class="tab-content" v-if="activeTab === 'project'">
                 <div class="sub-tabs">
                     <button @click="setactiveProjectTab('viewAll')" :class="{ active: activeProjectTab === 'viewAll' }">VIEW ALL</button>
@@ -113,8 +112,9 @@ export default {
     margin-top: 20px;
     border-radius: 10px;
     background-color: #F2F2F2;
-    width: 50%;
-    padding: 30px 0;
+    width: 90%;
+    padding: 30px 1%;
+    max-width: 600px;
 }
 
 .content-wrapper {
@@ -164,7 +164,7 @@ export default {
 }
 
 .tab-content {
-    margin: 10px 40px;
+    margin: 10px 10px;
 }
 
 .new-project {
@@ -173,5 +173,44 @@ export default {
 
 .project-list {
     width: 100%;
+}
+
+@media (max-width: 768px) {
+
+    .tabs button,
+    .sub-tabs button {
+        font-size: 1rem;
+    }
+
+    .tabs,
+    .sub-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tabs button,
+    .sub-tabs button {
+        padding: 5px;
+        margin: 5px;
+    }
+
+    @media (max-width: 480px) {
+
+        .tabs button,
+        .sub-tabs button {
+            font-size: 0.8rem;
+        }
+
+        .container {
+            padding: 30px 5%;
+        }
+
+        .content-wrapper,
+        .new-project,
+        .project-list {
+            width: 100%;
+        }
+    }
 }
 </style>

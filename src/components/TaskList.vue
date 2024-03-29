@@ -3,21 +3,22 @@
     <template v-if="tasks.length > 0">
         <div v-for="(task, index) in filteredTasks" :key="index" class="task" :class="{ 'active': showDescription === index, 'task-incomplete': !task.isCompleted }" @click="toggleCard(index)">
             <div class="icons">
-                <h3>{{ task.title }}</h3>
+                <div class="title">
+                    <h3>{{ task.title }}</h3>
+                </div>
                 <div class="icons-list">
                     <i class="material-icons" @click.stop="deleteTask(index)">delete</i>
                     <i class="material-icons" @click.stop="editTask(index)">edit</i>
                     <i class="material-icons check-icon" @click.stop="toggleCompletion(index)" :class="{ active: task.isCompleted }">check</i>
                 </div>
             </div>
-            <div v-if="showDescription === index">{{ task.details }}</div>
+            <div v-if="showDescription === index" class="details">{{ task.details }}</div>
         </div>
     </template>
     <p v-else class="paragraph">No projects</p>
 </div>
 </template>
 
-    
 <script>
 export default {
     name: "TaskList",
@@ -34,7 +35,7 @@ export default {
         filteredTasks() {
             if (this.showCompleted === null) {
                 return this.tasks;
-            }else{
+            } else {
                 return this.tasks.filter(task => this.showCompleted ? task.isCompleted : !task.isCompleted);
             }
         }
@@ -67,8 +68,15 @@ export default {
     border-radius: 5px;
     transition: all 0.3s ease;
     cursor: pointer;
-    padding: 10px 10px 10px 30px;
-    margin: 20px 0;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+.icons-list i {
+    margin-right: 10px;
+    color: #BBBBBB;
+    cursor: pointer;
 }
 
 .task-incomplete {
@@ -85,9 +93,10 @@ export default {
     align-items: center;
 }
 
-.icons-list i {
-    margin-right: 10px;
-    color: #BBBBBB;
+.icons .title {
+    width: 70%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
 }
 
 .icons-list .check-icon {
@@ -101,9 +110,74 @@ export default {
     padding: 0;
 }
 
+.details {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    margin-top: 10px;
+}
+
 .paragraph {
     font-size: 2rem;
     color: rgb(173, 173, 173);
     text-align: center;
+}
+
+@media (max-width: 768px) {
+    .task {
+        font-size: 0.9rem;
+        padding: 10px 10px;
+    }
+
+    .icons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .icons h3 {
+        margin-bottom: 10px;
+    }
+
+    .icons-list i {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .task {
+        margin: 10px 0;
+    }
+
+    .icons-list i {
+        margin-right: 3px;
+        font-size: 16px;
+    }
+    .icons{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .icons .icons-list{
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .title {
+        font-size: 12px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+    }
+
+    .details {
+        line-height: 22px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        margin-top: 10px;
+    }
 }
 </style>
